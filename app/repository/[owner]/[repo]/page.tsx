@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter, useParams } from 'next/navigation'
+import EmailModal from './components/EmailModal'
 
 interface Issue {
   id: number
@@ -84,6 +85,8 @@ export default function RepositoryPage() {
   const [candidates, setCandidates] = useState<Candidate[]>([])
   const [assignedContributor, setAssignedContributor] = useState<AssignedContributor | null>(null)
   const [loadingDetails, setLoadingDetails] = useState(false)
+  const [emailModalOpen, setEmailModalOpen] = useState(false)
+  const [assigningUser, setAssigningUser] = useState<string | null>(null)
 
   const owner = params?.owner as string
   const repo = params?.repo as string
@@ -154,6 +157,48 @@ export default function RepositoryPage() {
     localStorage.clear()
     sessionStorage.clear()
     await signOut({ redirect: true, callbackUrl: '/' })
+  }
+
+  const handleAssignUser = async (username: string, action: 'assign' | 'unassign') => {
+    if (!selectedIssue) return
+    
+    setAssigningUser(username)
+    try {
+      const response = await fetch('/api/github/assign', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          owner,
+          repo,
+          issueNumber: selectedIssue.number,
+          username,
+          action
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        // Refresh the issue details
+        await fetchIssueCandidates(selectedIssue.number)
+        
+        // Optionally refresh the repository data to update issue list
+        const repoResponse = await fetch(`/api/repository/${owner}/${repo}`)
+        const repoData = await repoResponse.json()
+        if (repoData.success) {
+          setRepoData(repoData)
+        }
+      } else {
+        alert(`Failed to ${action} user: ${data.error}`)
+      }
+    } catch (error) {
+      console.error(`Error ${action}ing user:`, error)
+      alert(`Failed to ${action} user`)
+    } finally {
+      setAssigningUser(null)
+    }
   }
 
   const getActivityColor = (activityLevel: string) => {
@@ -438,6 +483,26 @@ export default function RepositoryPage() {
                           <div className="text-xs text-gray-400">Days Since Last Activity</div>
                         </div>
                       </div>
+
+                      {/* Action Buttons */}
+                      <div className="mt-6 pt-4 border-t border-white/10 space-y-3">
+                        <button
+                          onClick={() => setEmailModalOpen(true)}
+                          className="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg transition-colors font-medium flex items-center justify-center space-x-2"
+                        >
+                          <span>📧</span>
+                          <span>Send Email to @{assignedContributor.username}</span>
+                        </button>
+                        
+                        <button
+                          onClick={() => handleAssignUser(assignedContributor.username, 'unassign')}
+                          disabled={assigningUser === assignedContributor.username}
+                          className="w-full bg-red-500 hover:bg-red-600 text-white py-3 px-4 rounded-lg transition-colors font-medium flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <span>❌</span>
+                          <span>{assigningUser === assignedContributor.username ? 'Unassigning...' : `Unassign @${assignedContributor.username}`}</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ) : candidates.length > 0 ? (
@@ -478,7 +543,7 @@ export default function RepositoryPage() {
                           </div>
 
                           <div className="mb-3 p-3 bg-gray-800/50 rounded-lg">
-                            <p className="text-sm text-gray-300 italic">"{candidate.claimText}"</p>
+                            <p className="text-sm text-gray-300 italic">&quot;{candidate.claimText}&quot;</p>
                           </div>
 
                           <div className="grid grid-cols-3 gap-2 text-xs">
@@ -512,6 +577,16 @@ export default function RepositoryPage() {
                               ></div>
                             </div>
                           </div>
+
+                          {/* Assign Button */}
+                          <button
+                            onClick={() => handleAssignUser(candidate.username, 'assign')}
+                            disabled={assigningUser === candidate.username}
+                            className="w-full mt-3 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg transition-colors font-medium flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            <span>✅</span>
+                            <span>{assigningUser === candidate.username ? 'Assigning...' : `Assign @${candidate.username}`}</span>
+                          </button>
                         </div>
                       ))}
                     </div>
@@ -528,6 +603,24 @@ export default function RepositoryPage() {
           </div>
         </div>
       </main>
+
+      {/* Email Modal */}
+      {emailModalOpen && assignedContributor && selectedIssue && (
+        <EmailModal
+          isOpen={emailModalOpen}
+          onClose={() => setEmailModalOpen(false)}
+          contributor={{
+            username: assignedContributor.username,
+            avatarUrl: assignedContributor.avatarUrl
+          }}
+          issue={{
+            number: selectedIssue.number,
+            title: selectedIssue.title,
+            htmlUrl: selectedIssue.htmlUrl
+          }}
+          repositoryName={repoData?.repository?.fullName || `${owner}/${repo}`}
+        />
+      )}
     </div>
   )
 }

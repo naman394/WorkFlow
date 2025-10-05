@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../../../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 
 // Comprehensive claim detection patterns - ANY comment could be a potential claim
 const CLAIM_PATTERNS = [
@@ -522,7 +522,7 @@ export async function GET(
     const cookieLicking = await detectCookieLicking(
       actualIssues, 
       formattedContributors, 
-      session.accessToken as string, 
+      accessToken, 
       params.owner, 
       params.repo
     )

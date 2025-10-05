@@ -140,13 +140,13 @@ Thanks everyone! 🌟`,
     // Personalize the message
     const personalizedMessage = this.personalizeMessage(template.message, {
       username: claim.contributor.username,
-      issueNumber: claim.issueNumber,
+      issueNumber: claim.issueNumber.toString(),
       repoName: repositoryName,
     })
 
     const personalizedSubject = this.personalizeMessage(template.subject, {
       username: claim.contributor.username,
-      issueNumber: claim.issueNumber,
+      issueNumber: claim.issueNumber.toString(),
       repoName: repositoryName,
     })
 

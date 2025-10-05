@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../../../../../../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 
 // Claim detection patterns
 const CLAIM_PATTERNS = [
@@ -26,12 +26,17 @@ export async function GET(
   try {
     const session = await getServerSession(authOptions)
 
-    if (!session || !session.accessToken) {
+    if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { owner, repo, issueNumber } = params
+    // @ts-ignore
     const accessToken = session.accessToken as string
+    if (!accessToken) {
+      return NextResponse.json({ error: 'No access token' }, { status: 401 })
+    }
+
+    const { owner, repo, issueNumber } = params
 
     // Fetch issue details
     const issueResponse = await fetch(

@@ -188,18 +188,18 @@ export class GitHubService {
       // Analyze user's history in this repository
       for (const issue of issues.slice(0, 50)) { // Check last 50 issues
         const comments = await this.getIssueComments(owner, repo, issue.number)
-        const userComments = comments.filter(comment => comment.user.login === username)
+        const userComments = comments.filter((comment: any) => comment.user.login === username)
         
         if (userComments.length > 0) {
           // Check if user claimed this issue
-          const claimComments = userComments.filter(comment => 
+          const claimComments = userComments.filter((comment: any) => 
             this.extractClaimsFromComments([comment], issue.number, repositoryId).length > 0
           )
           
           if (claimComments.length > 0) {
             // Check if issue was completed (has linked PR or was closed by user)
             const hasLinkedPR = issue.pull_request
-            const closedByUser = issue.closed_at && userComments.some(comment => 
+            const closedByUser = issue.closed_at && userComments.some((comment: any) => 
               new Date(comment.created_at) > new Date(issue.closed_at!)
             )
             

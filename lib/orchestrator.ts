@@ -387,7 +387,7 @@ export class CookieLickingDetector {
     try {
       // Get all issues with assignees
       const issues = await this.githubService.getRepositoryIssues(owner, repo, 'open')
-      const assignedIssues = issues.filter(issue => issue.assignees && issue.assignees.length > 0)
+      const assignedIssues = issues.filter((issue: any) => issue.assignees && issue.assignees.length > 0)
       
       console.log(`📋 Found ${assignedIssues.length} assigned issues in ${owner}/${repo}`)
       

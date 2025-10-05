@@ -1,7 +1,7 @@
 // Test SMTP configuration endpoint
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import { EmailNotificationService } from '@/lib/email-service'
 
 export async function GET() {
@@ -66,14 +66,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: result.success,
       message: result.success ? 'Test email sent successfully' : 'Failed to send test email',
-      messageId: result.messageId,
+      messageId: result.messageId || 'unknown',
       error: result.error
     })
 
   } catch (error) {
     console.error('SMTP test email error:', error)
     return NextResponse.json(
-      { error: 'Failed to send test email', details: (error as Error).message },
+      { 
+        success: false,
+        error: 'Failed to send test email', 
+        details: (error as Error).message,
+        messageId: `error_${Date.now()}`
+      },
       { status: 500 }
     )
   }

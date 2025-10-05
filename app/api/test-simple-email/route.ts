@@ -1,19 +1,15 @@
-// Test endpoint for email notifications
+// Simple test endpoint for email notifications (without nodemailer)
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { EmailNotificationService } from '@/lib/email-service'
+import { SimpleEmailNotificationService } from '@/lib/email-service-simple'
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('🔍 Test email API called')
-    
     const session = await getServerSession(authOptions)
-    console.log('📊 Session:', session ? 'found' : 'not found')
     
     if (!session) {
-      console.log('❌ No session found, returning unauthorized')
-      return NextResponse.json({ error: 'Unauthorized - Please log in first' }, { status: 401 })
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const { 
@@ -39,18 +35,16 @@ export async function POST(request: NextRequest) {
     const finalBenchmark = benchmark || 40
     const finalIssueUrl = issueUrl || `https://github.com/test/test/issues/${issueNumber}`
 
-    // Initialize email service
+    // Initialize simple email service
     let emailService
     try {
-      console.log('🔧 Initializing email service...')
-      emailService = new EmailNotificationService()
-      console.log('✅ Email service initialized successfully')
+      emailService = new SimpleEmailNotificationService()
+      console.log('📧 Simple email service initialized successfully')
     } catch (error) {
-      console.error('❌ Failed to initialize email service:', error)
-      console.error('Error details:', error)
+      console.error('❌ Failed to initialize simple email service:', error)
       return NextResponse.json({
         success: false,
-        error: 'Failed to initialize email service',
+        error: 'Failed to initialize simple email service',
         details: (error as Error).message,
         messageId: `init_error_${Date.now()}`
       }, { status: 500 })
@@ -71,7 +65,7 @@ export async function POST(request: NextRequest) {
     if (result.success) {
       return NextResponse.json({
         success: true,
-        message: 'Test email sent successfully',
+        message: 'Test email sent successfully (simple service)',
         messageId: result.messageId,
         emailData: {
           to: contributorEmail,
@@ -89,7 +83,7 @@ export async function POST(request: NextRequest) {
     }
 
   } catch (error) {
-    console.error('Test email API error:', error)
+    console.error('Simple test email API error:', error)
     return NextResponse.json(
       { 
         success: false,
@@ -104,7 +98,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   return NextResponse.json({
-    message: 'Test email endpoint - use POST to send test emails',
+    message: 'Simple test email endpoint - use POST to send test emails (no nodemailer)',
     example: {
       method: 'POST',
       body: {

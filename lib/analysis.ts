@@ -57,6 +57,7 @@ export class IssueAnalysisEngine {
           issueId: issueNumber.toString(),
           issueNumber,
           repositoryId,
+          repositoryName: repositoryId, // Add missing property
           contributorId: comment.user.id.toString(),
           contributor: {
             id: comment.user.id.toString(),

@@ -1,6 +1,6 @@
 // Email Notification Service for Cookie-Licking Detector
 
-import nodemailer from 'nodemailer'
+const nodemailer = require('nodemailer')
 
 export interface EmailNotification {
   to: string
@@ -26,7 +26,7 @@ export interface NotificationLog {
 
 export class EmailNotificationService {
   private notificationLogs: NotificationLog[] = []
-  private transporter: nodemailer.Transporter | null = null
+  private transporter: any = null
 
   constructor() {
     this.initializeTransporter()
@@ -34,25 +34,37 @@ export class EmailNotificationService {
 
   private initializeTransporter(): void {
     try {
-      const smtpConfig = {
-        host: process.env.SMTP_HOST || 'smtp.gmail.com',
-        port: parseInt(process.env.SMTP_PORT || '587'),
-        secure: process.env.SMTP_PORT === '465', // true for 465, false for other ports
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS
+      console.log('🔧 Initializing email transporter...')
+      
+      // Check if we have SMTP configuration
+      const hasSmtpConfig = process.env.SMTP_USER && process.env.SMTP_PASS
+      
+      if (hasSmtpConfig) {
+        console.log('📧 SMTP configuration found, initializing transporter...')
+        
+        const smtpConfig = {
+          host: process.env.SMTP_HOST || 'smtp.gmail.com',
+          port: parseInt(process.env.SMTP_PORT || '587'),
+          secure: process.env.SMTP_PORT === '465', // true for 465, false for other ports
+          auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS
+          }
         }
-      }
 
-      // Only create transporter if all required config is available
-      if (smtpConfig.auth.user && smtpConfig.auth.pass) {
+        console.log('📧 Creating nodemailer transporter...')
         this.transporter = nodemailer.createTransporter(smtpConfig)
-        console.log('📧 Email transporter initialized with SMTP configuration')
+        console.log('📧 Email transporter initialized successfully')
       } else {
         console.log('⚠️ SMTP configuration incomplete, emails will be logged to console only')
+        console.log('SMTP_USER:', process.env.SMTP_USER ? 'configured' : 'missing')
+        console.log('SMTP_PASS:', process.env.SMTP_PASS ? 'configured' : 'missing')
+        this.transporter = null
       }
     } catch (error) {
       console.error('❌ Failed to initialize email transporter:', error)
+      console.error('Error details:', error)
+      this.transporter = null
     }
   }
 
@@ -111,6 +123,9 @@ export class EmailNotificationService {
       return { success: true, messageId }
 
     } catch (error) {
+      const errorMessage = (error as Error).message
+      console.error('📧 EMAIL SEND FAILED:', error)
+
       const errorLog: NotificationLog = {
         id: messageId,
         timestamp: new Date().toISOString(),
@@ -123,13 +138,12 @@ export class EmailNotificationService {
         benchmark,
         emailSent: false,
         messageId,
-        error: (error as Error).message
+        error: errorMessage
       }
 
       this.notificationLogs.push(errorLog)
-      console.error('📧 EMAIL SEND FAILED:', error)
 
-      return { success: false, messageId, error: (error as Error).message }
+      return { success: false, messageId, error: errorMessage }
     }
   }
 
@@ -241,7 +255,6 @@ export class EmailNotificationService {
           <div style="text-align: center; margin-top: 20px; color: #6c757d; font-size: 12px;">
             <p style="margin: 5px 0;">🍪 Cookie-Licking Detector - AI-Powered Issue Management</p>
             <p style="margin: 5px 0;">This email was sent automatically based on completion probability analysis.</p>
-            <p style="margin: 5px 0;">Message ID: ${messageId}</p>
           </div>
         </div>
       </body>

@@ -1,20 +1,10 @@
-// Test endpoint for email notifications
+// Test endpoint for email notifications (no authentication required for testing)
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import { EmailNotificationService } from '@/lib/email-service'
+import { SimpleEmailNotificationService } from '@/lib/email-service-simple'
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('🔍 Test email API called')
-    
-    const session = await getServerSession(authOptions)
-    console.log('📊 Session:', session ? 'found' : 'not found')
-    
-    if (!session) {
-      console.log('❌ No session found, returning unauthorized')
-      return NextResponse.json({ error: 'Unauthorized - Please log in first' }, { status: 401 })
-    }
+    console.log('🔍 Test email API called (no auth)')
 
     const { 
       contributorEmail, 
@@ -26,6 +16,17 @@ export async function POST(request: NextRequest) {
       benchmark,
       issueUrl 
     } = await request.json()
+
+    console.log('📧 Request data:', {
+      contributorEmail,
+      contributorName,
+      issueTitle,
+      issueNumber,
+      repositoryName,
+      currentProbability,
+      benchmark,
+      issueUrl
+    })
 
     // Validate required fields
     if (!contributorEmail || !contributorName || !issueTitle || !issueNumber || !repositoryName) {
@@ -39,24 +40,30 @@ export async function POST(request: NextRequest) {
     const finalBenchmark = benchmark || 40
     const finalIssueUrl = issueUrl || `https://github.com/test/test/issues/${issueNumber}`
 
-    // Initialize email service
+    console.log('📧 Using values:', {
+      finalProbability,
+      finalBenchmark,
+      finalIssueUrl
+    })
+
+    // Initialize simple email service
     let emailService
     try {
-      console.log('🔧 Initializing email service...')
-      emailService = new EmailNotificationService()
-      console.log('✅ Email service initialized successfully')
+      console.log('🔧 Initializing simple email service...')
+      emailService = new SimpleEmailNotificationService()
+      console.log('✅ Simple email service initialized successfully')
     } catch (error) {
-      console.error('❌ Failed to initialize email service:', error)
-      console.error('Error details:', error)
+      console.error('❌ Failed to initialize simple email service:', error)
       return NextResponse.json({
         success: false,
-        error: 'Failed to initialize email service',
+        error: 'Failed to initialize simple email service',
         details: (error as Error).message,
         messageId: `init_error_${Date.now()}`
       }, { status: 500 })
     }
 
     // Send test email
+    console.log('📧 Sending test email...')
     const result = await emailService.sendLowProbabilityAlert(
       contributorEmail,
       contributorName,
@@ -68,10 +75,12 @@ export async function POST(request: NextRequest) {
       finalIssueUrl
     )
 
+    console.log('📧 Email result:', result)
+
     if (result.success) {
       return NextResponse.json({
         success: true,
-        message: 'Test email sent successfully',
+        message: 'Test email sent successfully (no auth)',
         messageId: result.messageId,
         emailData: {
           to: contributorEmail,
@@ -89,7 +98,7 @@ export async function POST(request: NextRequest) {
     }
 
   } catch (error) {
-    console.error('Test email API error:', error)
+    console.error('❌ Test email API error:', error)
     return NextResponse.json(
       { 
         success: false,
@@ -104,7 +113,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   return NextResponse.json({
-    message: 'Test email endpoint - use POST to send test emails',
+    message: 'Test email endpoint (no auth) - use POST to send test emails',
     example: {
       method: 'POST',
       body: {

@@ -364,7 +364,7 @@ export default function SelectRepository() {
                     <span className="text-2xl">ℹ️</span>
                   </div>
                   <h3 className="text-sm font-semibold text-white mb-2">
-                    Click "Start Monitoring" to track repositories
+                    Click &quot;Start Monitoring&quot; to track repositories
                   </h3>
                   <p className="text-xs text-gray-400">
                     Monitor repositories for cookie-licking issues and contributor engagement

@@ -188,7 +188,7 @@ export function CookieLickingTab({ cookieLicking }: CookieLickingTabProps) {
               <div className="text-4xl mb-4">🔍</div>
               <p className="text-gray-400 mb-2">No claims found in issue comments</p>
               <p className="text-sm text-gray-500">
-                This means no one has commented with phrases like "I'll work on this" or "assign this to me" on your repository's issues.
+                This means no one has commented with phrases like &quot;I&apos;ll work on this&quot; or &quot;assign this to me&quot; on your repository&apos;s issues.
               </p>
               <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                 <p className="text-sm text-blue-300">
@@ -222,7 +222,7 @@ export function CookieLickingTab({ cookieLicking }: CookieLickingTabProps) {
                   </div>
 
                   <p className="text-sm text-gray-300 mb-3 line-clamp-2">
-                    "{claim.claimText}"
+                    &quot;{claim.claimText}&quot;
                   </p>
 
                   <div className="flex items-center justify-between text-sm">

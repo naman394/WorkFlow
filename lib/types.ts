@@ -1,4 +1,4 @@
-// Core types for the Cookie-Licking Detector
+// Core types for Workflow
 
 export interface Contributor {
   id: string

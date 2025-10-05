@@ -1,4 +1,4 @@
-// Auto-Release Mechanism for Cookie-Licking Detector
+// Auto-Release Mechanism for Workflow
 
 import { IssueClaim, RepositoryConfig, Intervention } from './types'
 
@@ -96,7 +96,7 @@ This issue has been automatically released for new contributors.
 The issue is now available for anyone to work on. Please comment below if you'd like to take it on! 🚀
 
 ---
-*This action was taken by the Cookie-Licking Detector to maintain active issue management.*`,
+*This action was taken by Workflow to maintain active issue management.*`,
 
       `## ⏰ Issue Available Again
 
@@ -108,7 +108,7 @@ This issue is now available for new contributors to work on.
 Feel free to comment if you'd like to work on this issue! 
 
 ---
-*Auto-released by Cookie-Licking Detector*`,
+*Auto-released by Workflow*`,
 
       `## 🆓 Issue Released
 
@@ -120,7 +120,7 @@ This issue has been released and is available for contributors.
 If you're interested in working on this issue, please comment below!
 
 ---
-*Managed by Cookie-Licking Detector for better issue flow*`,
+*Managed by Workflow for better issue flow*`,
     ]
 
     // Select template based on claim history

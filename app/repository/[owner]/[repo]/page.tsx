@@ -264,7 +264,7 @@ export default function RepositoryPage() {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-white">{repoData.repository.fullName}</h1>
-                <p className="text-xs text-gray-400">Cookie-Licking Detector</p>
+                <p className="text-xs text-gray-400">Workflow</p>
               </div>
             </Link>
             <div className="hidden md:flex items-center space-x-6">

@@ -1,4 +1,4 @@
-// Intelligent Nudging System for Cookie-Licking Detector
+// Intelligent Nudging System for Workflow
 
 import { IssueClaim, NudgeTemplate, Intervention } from './types'
 

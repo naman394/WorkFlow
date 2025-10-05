@@ -276,7 +276,7 @@ export default function Dashboard() {
                   <span className="text-2xl">🍪</span>
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-white">Cookie-Licking Detector</h1>
+                  <h1 className="text-2xl font-bold text-white">Workflow</h1>
                   <p className="text-sm text-gray-400">Dashboard</p>
                 </div>
               </Link>

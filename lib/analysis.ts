@@ -1,4 +1,4 @@
-// Issue Analysis Engine for Cookie-Licking Detector
+// Issue Analysis Engine for Workflow
 
 import { IssueClaim, Contributor, IssueAnalysis, PredictionModel } from './types'
 import { detectClaim, detectProgress, extractClaimType, calculateIssueComplexity } from './github'

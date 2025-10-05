@@ -1,4 +1,4 @@
-// Email Notification Service for Cookie-Licking Detector
+// Email Notification Service for Workflow
 
 const nodemailer = require('nodemailer')
 
@@ -165,13 +165,13 @@ export class EmailNotificationService {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cookie-Licking Detector Alert</title>
+        <title>Workflow Alert</title>
       </head>
       <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f8f9fa; line-height: 1.6;">
         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
           <!-- Header -->
           <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 600;">🍪 Cookie-Licking Detector</h1>
+            <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 600;">🍪 Workflow</h1>
             <p style="color: #e0e0e0; margin: 10px 0 0 0; font-size: 16px;">Issue Completion Probability Alert</p>
           </div>
           
@@ -245,7 +245,7 @@ export class EmailNotificationService {
             <!-- Note -->
             <div style="background: #fff3e0; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ff9800;">
               <p style="color: #e65100; margin: 0; font-size: 14px;">
-                <strong>🤖 Automated Alert:</strong> This notification was sent automatically by the Cookie-Licking Detector 
+                <strong>🤖 Automated Alert:</strong> This notification was sent automatically by Workflow 
                 based on your completion probability analysis. If your probability improves, you'll receive a positive update notification.
               </p>
             </div>
@@ -253,7 +253,7 @@ export class EmailNotificationService {
           
           <!-- Footer -->
           <div style="text-align: center; margin-top: 20px; color: #6c757d; font-size: 12px;">
-            <p style="margin: 5px 0;">🍪 Cookie-Licking Detector - AI-Powered Issue Management</p>
+            <p style="margin: 5px 0;">🍪 Workflow - AI-Powered Issue Management</p>
             <p style="margin: 5px 0;">This email was sent automatically based on completion probability analysis.</p>
           </div>
         </div>
@@ -272,7 +272,7 @@ export class EmailNotificationService {
     issueUrl: string
   ): string {
     return `
-🍪 Cookie-Licking Detector - Completion Probability Alert
+🍪 Workflow - Completion Probability Alert
 
 ⚠️ LOW COMPLETION PROBABILITY ALERT
 
@@ -299,11 +299,11 @@ Difference: ${benchmark - currentProbability}% below benchmark
 
 📝 VIEW ISSUE: ${issueUrl}
 
-🤖 This is an automated alert from the Cookie-Licking Detector. 
+🤖 This is an automated alert from Workflow. 
 If your probability improves, you'll receive a positive update notification.
 
 ---
-Cookie-Licking Detector - AI-Powered Issue Management
+Workflow - AI-Powered Issue Management
 Message ID: email_${Date.now()}
     `
   }
@@ -336,7 +336,7 @@ Message ID: email_${Date.now()}
 
     try {
       const mailOptions = {
-        from: `"Cookie-Licking Detector" <${process.env.SMTP_USER}>`,
+        from: `"Workflow" <${process.env.SMTP_USER}>`,
         to: emailData.to,
         subject: emailData.subject,
         html: emailData.html,

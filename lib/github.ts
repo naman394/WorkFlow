@@ -1,4 +1,4 @@
-// GitHub API integration for Cookie-Licking Detector
+// GitHub API integration for Workflow
 
 import { IssueClaim, Contributor, IssueAnalysis } from './types'
 

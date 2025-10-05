@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Add footer
-    mentionMessage += `\n\n---\n*This message was sent via Cookie-Licking Detector to help maintain issue progress.*`
+    mentionMessage += `\n\n---\n*This message was sent via Workflow to help maintain issue progress.*`
 
     // Send comment to the issue
     const commentResponse = await fetch(

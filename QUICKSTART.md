@@ -8,7 +8,7 @@
 2. Click **"New OAuth App"**
 3. Fill in:
    ```
-   Application name: Cookie-Licking Detector
+   Application name: Workflow
    Homepage URL: http://localhost:3000
    Callback URL: http://localhost:3000/api/auth/callback/github
    ```

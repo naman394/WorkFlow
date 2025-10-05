@@ -197,7 +197,7 @@ export default function SelectRepository() {
                 <span className="text-2xl">🍪</span>
               </div>
               <div>
-                <span className="text-xl font-bold text-white">Cookie-Licking Detector</span>
+                <span className="text-xl font-bold text-white">Workflow</span>
                 <p className="text-xs text-gray-400">Repository Selection</p>
               </div>
             </Link>
@@ -509,7 +509,7 @@ export default function SelectRepository() {
             <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center">
               <span className="text-lg">🍪</span>
             </div>
-            <span className="text-lg font-semibold text-white">Cookie-Licking Detector</span>
+            <span className="text-lg font-semibold text-white">Workflow</span>
           </div>
           <p className="text-gray-400 text-sm">
             Transform your open source project with AI-powered issue management

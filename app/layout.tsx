@@ -6,7 +6,7 @@ import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Cookie-Licking Detector - AI-Powered Issue Management',
+  title: 'Workflow - AI-Powered Issue Management',
   description: 'Transform your open source project with AI-powered detection and resolution of the "reserved issue" problem. Stop cookie-licking and boost contributor engagement.',
   keywords: ['open source', 'github', 'issue management', 'ai', 'automation'],
 }

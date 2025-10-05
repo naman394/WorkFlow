@@ -1,4 +1,4 @@
-# Setup Instructions for Cookie-Licking Detector
+# Setup Instructions for Workflow
 
 ## GitHub OAuth Setup
 
@@ -10,7 +10,7 @@ To enable GitHub authentication and repository selection, follow these steps:
 2. Click "OAuth Apps" in the left sidebar
 3. Click "New OAuth App"
 4. Fill in the details:
-   - **Application name**: Cookie-Licking Detector
+   - **Application name**: Workflow
    - **Homepage URL**: `http://localhost:3000`
    - **Authorization callback URL**: `http://localhost:3000/api/auth/callback/github`
 5. Click "Register application"

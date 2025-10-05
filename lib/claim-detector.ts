@@ -1,4 +1,4 @@
-// Advanced Claim Detection Engine for Cookie-Licking Detector
+// Advanced Claim Detection Engine for Workflow
 
 import { IssueClaim, Contributor } from './types'
 

@@ -1,4 +1,4 @@
-# SMTP Email Setup for Cookie-Licking Detector
+# SMTP Email Setup for Workflow
 
 This guide will help you configure SMTP email notifications for the automatic email alert system.
 

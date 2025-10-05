@@ -1,4 +1,4 @@
-# SMTP Email Configuration for Cookie-Licking Detector
+# SMTP Email Configuration for Workflow
 # Add these to your existing .env.local file
 
 # SMTP Configuration (Nodemailer)
@@ -8,4 +8,4 @@ SMTP_USER=your_email@gmail.com
 SMTP_PASS=your_app_password
 
 # Optional: Custom from name
-SMTP_FROM_NAME=Cookie-Licking Detector
+SMTP_FROM_NAME=Workflow

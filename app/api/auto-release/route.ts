@@ -46,7 +46,7 @@ The issue is now available for anyone to work on. Please comment below if you'd 
 - Gives other contributors a chance to help
 
 ---
-*This action was taken by the Cookie-Licking Detector to maintain active issue management.*`
+*This action was taken by Workflow to maintain active issue management.*`
 
         // Add comment to issue
         await githubService.createIssueComment(owner, repo, parseInt(issueNumber), releaseMessage)

@@ -1,4 +1,4 @@
-// Main Orchestrator for Cookie-Licking Detector
+// Main Orchestrator for Workflow
 
 import { IssueClaim, IssueAnalysis, RepositoryConfig, Intervention, Analytics } from './types'
 import { GitHubService } from './github'

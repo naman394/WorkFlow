@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   return NextResponse.json({
-    message: 'Cookie-Licking Detector API',
+    message: 'Workflow API',
     version: '1.0.0',
     endpoints: {
       'POST /api/process': 'Process a repository for cookie-licking detection',

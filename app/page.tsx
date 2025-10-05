@@ -206,18 +206,6 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  <Link href="#features" className="text-gray-300 hover:text-white transition-colors">
-                    Product
-                  </Link>
-                  <Link href="#how-it-works" className="text-gray-300 hover:text-white transition-colors">
-                    Customers
-                  </Link>
-                  <Link href="/dashboard" className="text-gray-300 hover:text-white transition-colors">
-                    Company
-                  </Link>
-                  <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">
-                    Pricing
-                  </Link>
                   <button 
                     onClick={() => signIn('github', { 
                       callbackUrl: '/select-repository',

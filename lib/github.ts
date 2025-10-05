@@ -10,6 +10,10 @@ export class GitHubService {
     this.token = token
   }
 
+  get accessToken(): string {
+    return this.token
+  }
+
   private async makeRequest(endpoint: string, options: RequestInit = {}) {
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       ...options,

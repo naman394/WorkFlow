@@ -1,0 +1,11 @@
+# SMTP Email Configuration for Cookie-Licking Detector
+# Add these to your existing .env.local file
+
+# SMTP Configuration (Nodemailer)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_app_password
+
+# Optional: Custom from name
+SMTP_FROM_NAME=Cookie-Licking Detector

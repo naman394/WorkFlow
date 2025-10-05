@@ -1,0 +1,40 @@
+# Email Notification System Environment Variables
+# Copy this to .env.local and fill in your values
+
+# GitHub OAuth (existing)
+GITHUB_ID=your_github_oauth_app_id
+GITHUB_SECRET=your_github_oauth_app_secret
+
+# NextAuth (existing)
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
+
+# Email Service Configuration
+# Choose one of the following email services:
+
+# Option 1: SendGrid
+SENDGRID_API_KEY=your_sendgrid_api_key
+SENDGRID_FROM_EMAIL=noreply@yourdomain.com
+
+# Option 2: AWS SES
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_REGION=us-east-1
+SES_FROM_EMAIL=noreply@yourdomain.com
+
+# Option 3: Nodemailer (SMTP)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_app_password
+
+# Cron Job Security
+CRON_SECRET=your_secure_cron_secret
+
+# Monitoring Configuration
+DEFAULT_BENCHMARK=40
+MONITORING_INTERVAL_MINUTES=60
+
+# Email Templates (optional)
+EMAIL_TEMPLATE_COLOR_PRIMARY=#667eea
+EMAIL_TEMPLATE_COLOR_SECONDARY=#764ba2
